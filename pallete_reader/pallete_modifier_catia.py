@@ -2,9 +2,14 @@ import tkinter as tk
 from tkinter import colorchooser
 from tkinter import filedialog
 import csv
-import os
 
 DATA_TO_CHANGE = dict()
+
+############################
+#Insert here a palette path#
+PALETTE_PATH = ''
+############################
+
 
 import tkinter as tk
 
@@ -169,6 +174,7 @@ class PaletteFileSelector:
 
         self.root.title("Palette File Selector")
         root.font=("Roboto", 10)
+        # print(type(temp_file_path))
         self._create_widgets()
 
     def _create_widgets(self):
@@ -177,13 +183,16 @@ class PaletteFileSelector:
         file_button = ButtonCatia(self.root, type='gray', text="Select File", command=self._open_file_dialog, width=12)
         file_button.grid(row=0, column=5, columnspan=2, padx=10, pady=5, sticky=tk.EW)
 
-        self.remember_checkbox = CheckbuttonCatia(self.root, text="Remember palette file")
-        self.remember_checkbox.grid(row=1, column=0, columnspan=4, sticky='W', padx=5, pady=15)
+        # self.remember_checkbox = CheckbuttonCatia(self.root, text="Remember palette file")
+        # self.remember_checkbox.grid(row=1, column=0, columnspan=4, sticky='W', padx=5, pady=15)
 
         ok_button = ButtonCatia(self.root, type='blue', text="OK", command=self._show_ok_window)
         ok_button.grid(row=2, column=5, padx=0, pady=10)
         cancel_button = ButtonCatia(self.root, type='gray', text="Cancel", command=self.root.destroy)
         cancel_button.grid(row=2, column=6, padx=10, pady=10)
+        if PALETTE_PATH != '':
+            self.file_path = PALETTE_PATH
+            self._show_ok_window()
 
     def _open_file_dialog(self):
         # file_path = filedialog.askopenfilename(initialdir="C:\\Users\\DMH5\\AppData\\Local\\DassaultSystemes\\CATTemp", defaultextension=".csv", filetypes=[("Palette files", "*.csv")])
@@ -198,7 +207,6 @@ class PaletteFileSelector:
             temp_list = []
             data_dict = dict()
             for i, row in enumerate(csvreader):
-                print(row)
                 if row[1] != '' and len(temp_list) == 0:
                     temp_list.append([row[2], row[3], i+1])
                     data_dict[row[1]] = temp_list
@@ -210,8 +218,10 @@ class PaletteFileSelector:
                     data_dict[row[1]] = temp_list
         palette_fields = list(data_dict.keys())
         DATA_TO_CHANGE = dict()
-        if self.remember_checkbox.getboolean():
-            temp_file = open(os.path.join(os.getcwd(), "temp_bool_palette_script.txt", "x"))
+        # if self.remember_checkbox.getboolean(self.remember_checkbox.state):
+        #     with open (os.path.join(os.path.dirname(self.file_path), "temp_bool_palette_script.txt"), "w") as temp_file:
+        #         writer = csv.writer(temp_file)
+        #         writer.writerow([self.file_path])
 
         self.root.destroy()
 
@@ -219,12 +229,8 @@ class PaletteFileSelector:
         app = PaletteCollorSelector(root, palette_fields, data_dict)
         root.mainloop()
 
-
-
-
-        
-
-
 root = tk.Tk()
 app = PaletteFileSelector(root)
+
 root.mainloop()
+
