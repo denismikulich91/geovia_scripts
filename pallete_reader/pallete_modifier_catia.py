@@ -83,8 +83,9 @@ class PaletteCollorSelector:
 
 
 class PaletteCollorSelector:
-        def __init__(self, root, palette_fields, data_dict):
+        def __init__(self, root, palette_fields, data_dict, file_path):
             self.root = root
+            self.file_path = file_path
             self.palette_fields = palette_fields
             self.data_dict = data_dict
             screen_width = root.winfo_screenwidth()
@@ -124,13 +125,13 @@ class PaletteCollorSelector:
 
         def _write_new_pallete(self):
             new_csv = []
-            with open('source\Palette_menkar_R2023.csv', 'r') as outf:
+            with open(self.file_path, 'r') as outf:
                 reader = csv.reader(outf)
                 for line in reader:
                     new_csv.append(line)
 
 
-            with open('source\Palette_menkar_R2023.csv', 'w', newline='') as outf:
+            with open(self.file_path, 'w', newline='') as outf:
                 writer = csv.writer(outf)
                 for i, line in enumerate(new_csv):
                     if i in DATA_TO_CHANGE.keys():
@@ -226,7 +227,7 @@ class PaletteFileSelector:
         self.root.destroy()
 
         root = tk.Tk()
-        app = PaletteCollorSelector(root, palette_fields, data_dict)
+        app = PaletteCollorSelector(root, palette_fields, data_dict, self.file_path)
         root.mainloop()
 
 root = tk.Tk()
