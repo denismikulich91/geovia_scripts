@@ -1,0 +1,25 @@
+let x, y, z (Real)
+
+let pointsList(List)
+pointsList=`3D Shape00601912 A.1`.Query("Point","")
+Notify("#", pointsList.Size())
+
+let pt(Point)
+let DH_temp(TemplateInstance)
+for pt inside pointsList
+	
+
+{
+	//initialize
+	pt.coord(x,y,z)
+	DH_temp=InstantiateTemplate("dh_template_2", PartBody\Block_1)
+	DH_temp.SetAttributeObject("xy_plane",`xy plane`)
+	DH_temp.SetAttributeReal("X", x)
+	DH_temp.SetAttributeReal("Y",y)
+	DH_temp.SetAttributeReal("Z",z)
+	DH_temp.SetAttributeReal("elevation",435)
+	DH_temp.SetAttributeReal("angle",90)
+	EndModifyTemplate(DH_temp)
+	
+}
+`3D Shape00601912 A.1`.Update()

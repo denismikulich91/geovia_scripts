@@ -1,0 +1,30 @@
+let file (TextFile)
+set file = OpenTextFile("E:\MDA\Beta Testing\PowerBY\drilling.txt","r")
+
+
+//To get the data of the file in a buffer:
+let buffer (String)
+let i (Integer)
+Let Pt (point)
+let Xcoord(length)
+let pointCoord(List)
+let PN (Integer)
+PN = 1
+let diffX, diffY(LENGTH)
+diffX = 6796660m - 500m
+diffY = 295260m
+let X, Y(LENGTH)
+for i while file->IsEndOfFile() <> TRUE
+{
+	//Read the file until end is reached, read function reads one line at a time
+	set buffer = file->Read()
+	pointCoord = SplitString(buffer, ",")
+	//create a Point called "My_Point", under the PartBody
+	Pt=new("Point",ToString(PN),`PartBody\Ordered Geometrical Set.2`)
+	//set coordinates on the point
+	X = pointCoord.GetItem(2)*1m-diffX
+	Y = pointCoord.GetItem(3)*1m-diffY
+	Pt=point(X, Y,pointCoord.GetItem(4))
+	//		Notify("#, #",X, Y)
+	PN = PN+1
+}
