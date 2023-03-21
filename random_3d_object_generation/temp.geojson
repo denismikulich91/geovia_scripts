@@ -1,0 +1,6 @@
+{
+"type": "FeatureCollection",
+"name": "lampposts",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::27700" } },
+"features": []
+}
