@@ -1,5 +1,6 @@
 import processing, qgis.core
 import os
+from PyQt5.QtCore import QVariant
 import random
 import geojson
 
